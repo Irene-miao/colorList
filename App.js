@@ -11,18 +11,22 @@ import { FlatList } from 'react-native-gesture-handler';
 
    useEffect( () => {
   navigation.setOptions({
-    headerRight: () => <Button onPress={addColor} title='Add Color' />,
-    headerLeft: () => <Button onPress={resetColor} title='Reset Color' />,
+    headerRight: () => <TouchableOpacity style={styles.button} onPress={addColor}><Text style={styles.buttonText}>Add Color</Text></TouchableOpacity>,
+    headerLeft: () => <TouchableOpacity style={styles.button} onPress={resetColor}><Text style={styles.buttonText}>Reset</Text></TouchableOpacity>,
   });
 });
 
    function renderItem({ item }) {
-     return <TouchableOpacity onPress={() => navigation.navigate('DetailsScreen', {...item,
-     })
-     }>
-       <BlockRGB red={item.red} green={item.green} blue={item.blue} />;
+     return (
+     <TouchableOpacity 
+     onPress={() => navigation.navigate('Details', 
+     {...item,})
+     }
+     >
+       <BlockRGB red={item.red} green={item.green} blue={item.blue} />
      </TouchableOpacity>
-   }
+     );
+  }
    
  function addColor() {
   let newColor =
@@ -36,6 +40,7 @@ import { FlatList } from 'react-native-gesture-handler';
    ]);
    
  }
+ 
  function resetColor() {
    setColorArray([]);
  }
@@ -61,7 +66,7 @@ import { FlatList } from 'react-native-gesture-handler';
     </TouchableOpacity> */}
 
      <FlatList
-     style={{ width: '100% '}}
+     style={{ width: '100%' }}
      data={colorArray}
      renderItem={renderItem}
      />
@@ -94,10 +99,10 @@ const Stack = createStackNavigator();
 
 export default function App() {
   return (
-  <NavigationContainer>
+  <NavigationContainer >
     <Stack.Navigator>
-      <Stack.Screen name='Home' component={HomeScreen} />
-      <Stack.Screen name='DetailsScreen' component={DetailsScreen} />
+      <Stack.Screen name='Colors' component={HomeScreen} />
+      <Stack.Screen name='Details' component={DetailsScreen} />
     </Stack.Navigator>
   </NavigationContainer>
   );
@@ -108,11 +113,21 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
   },
 
   detailsText: {
     fontSize: 36,
     marginBottom: 12,
+    color: 'white',
   },
+
+  button: {
+padding: 5,
+backgroundColor: 'black',
+borderRadius: 10,
+  },
+
+  buttonText: {
+color: 'white',
+  }
 });
