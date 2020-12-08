@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import BlockRGB from './components/BlockRGB';
@@ -8,6 +8,13 @@ import { FlatList } from 'react-native-gesture-handler';
  
  function HomeScreen({ navigation}) {
    const [colorArray, setColorArray] = useState([]);
+
+   useEffect( () => {
+  navigation.setOptions({
+    headerRight: () => <Button onPress={addColor} title='Add Color' />,
+    headerLeft: () => <Button onPress={resetColor} title='Reset Color' />,
+  });
+});
 
    function renderItem({ item }) {
      return <TouchableOpacity onPress={() => navigation.navigate('DetailsScreen', {...item,
@@ -35,7 +42,7 @@ import { FlatList } from 'react-native-gesture-handler';
 
  return (
    <View style={styles.container}>
-    <TouchableOpacity
+    {/* <TouchableOpacity
     style={{ height: 40, justifyContent: 'center'}}
     onPress={addColor}
     >
@@ -51,7 +58,8 @@ import { FlatList } from 'react-native-gesture-handler';
       <Text style={{ color: 'red'}}>
         Reset color
         </Text>
-    </TouchableOpacity>
+    </TouchableOpacity> */}
+
      <FlatList
      style={{ width: '100% '}}
      data={colorArray}
@@ -101,5 +109,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+
+  detailsText: {
+    fontSize: 36,
+    marginBottom: 12,
   },
 });
